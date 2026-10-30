@@ -7,12 +7,16 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
-        with: { node-version: 24 }
+      - uses: actions/checkout@v4 # تم تحديثه للإصدار المستقر والموصى به
+      - uses: actions/setup-node@v4 # تم تحديثه للإصدار المستقر والموصى به
+        with: 
+          node-version: 24
       - run: npm install
       - run: npm run prep
-      - run: npx electron-builder --win --publish never
-      - uses: actions/upload-artifact@v5
+      - name: Build Electron App
+        run: npx electron-builder --win --publish never
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4 # تم تحديثه للإصدار v4 لتجنب مشاكل التوافق الحالية
         with:
           name: aswaq-badr-windows
+          path: dist/ # 👈 قمنا بتغيير المسار ليشمل مجلد dist بالكامل لرؤية المخرجات وتجنب الخطأ
